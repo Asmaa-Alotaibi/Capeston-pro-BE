@@ -1,6 +1,7 @@
 const express = require("express");
+const passport = require("passport");
 const {
-  creatItem,
+  createItem,
   itemList,
   fetchItems,
   deleteItem,
@@ -12,7 +13,12 @@ const upload = require("../middleware/multer");
 //ItemList
 router.get("/", itemList);
 //create Item
-router.post("/", upload.single("image"), creatItem);
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
+  createItem
+);
 
 //fetchItem
 router.param("itemId", async (req, res, next, itemId) => {
@@ -27,8 +33,17 @@ router.param("itemId", async (req, res, next, itemId) => {
   }
 });
 //delete Item
-router.delete("/:itemId", deleteItem);
+router.delete(
+  "/:itemId",
+  passport.authenticate("jwt", { session: false }),
+  deleteItem
+);
 
 //update Item
-router.put("/:itemId", upload.single("image"), updateItem);
+router.put(
+  "/:itemId",
+  passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
+  updateItem
+);
 module.exports = router;

@@ -1,4 +1,3 @@
-const { ExpectationFailed } = require("http-errors");
 const { Item } = require("../db/models");
 
 exports.fetchItems = async (itemId, next) => {
@@ -19,13 +18,14 @@ exports.itemList = async (req, res, next) => {
   }
 };
 
-exports.creatItem = async (req, res, next) => {
+exports.createItem = async (req, res, next) => {
   try {
     if (req.file) {
       req.body.image = `${req.protocol}://${req.get("host")}/media/${
         req.file.filename
       }`;
     }
+    req.body.ownerId = req.user.id;
     const newItem = await Item.create(req.body);
     res.status(201).json(newItem);
   } catch (error) {
@@ -36,8 +36,14 @@ exports.creatItem = async (req, res, next) => {
 
 exports.deleteItem = async (req, res, next) => {
   try {
-    await req.item.destroy();
-    res.status(204).end();
+    if (req.item.ownerId === req.user.id) {
+      await req.item.destroy();
+      res.status(204).end();
+    } else {
+      const err = new Error("Unauthorized");
+      err.status = 401;
+      next(err);
+    }
   } catch (error) {
     next(error);
   }
@@ -45,13 +51,19 @@ exports.deleteItem = async (req, res, next) => {
 
 exports.updateItem = async (req, res, next) => {
   try {
-    if (req.file) {
-      req.body.image = `${req.protocol}://${req.get("host")}/media/${
-        req.file.filename
-      }`;
+    if (req.item.ownerId === req.user.id) {
+      if (req.file) {
+        req.body.image = `${req.protocol}://${req.get("host")}/media/${
+          req.file.filename
+        }`;
+      }
+      await req.item.update(req.body);
+      res.status(204).end();
+    } else {
+      const err = new Error("Unauthorized");
+      err.status = 401;
+      next(err);
     }
-    await req.item.update(req.body);
-    res.status(204).end();
   } catch (error) {
     next(error);
   }
