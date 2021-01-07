@@ -2,14 +2,14 @@ module.exports = (sequelize, DataTypes) => {
   const Item = sequelize.define("Item", {
     name: {
       type: DataTypes.STRING,
-      allawNull: false,
+      allowNull: false,
     },
     description: {
       type: DataTypes.STRING,
     },
     image: {
       type: DataTypes.STRING,
-      allawNull: false,
+      allowNull: false,
     },
     gone: {
       type: DataTypes.BOOLEAN,
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     category: {
       type: DataTypes.STRING,
-      allawNull: false,
+      allowNull: false,
     },
   });
   return Item;
