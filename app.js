@@ -4,8 +4,10 @@ const bodyParser = require("body-parser");
 const db = require("./db/models");
 const passport = require("passport");
 const { localStrategy, jwtStrategy } = require("./middleware/passport");
+//Import Routers
+const itemRoutes = require("./routes/items");
 const userRoutes = require("./routes/users");
-const allusersRoutes = require("./routes/allusers");
+const profilesRoutes = require("./routes/profiles");
 //const addressRoutes = require("./routes/addresses"); // not done yet
 const path = require("path");
 
@@ -19,17 +21,27 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 passport.use(localStrategy);
 passport.use(jwtStrategy);
+//Routes
+app.use("/profiles", profilesRoutes);
+app.use("/items", itemRoutes);
 app.use(userRoutes);
 
-// routes
+//multer meddileware
 app.use("/media", express.static(path.join(__dirname, "media")));
-app.use("/allusers", allusersRoutes);
+
 //app.use("/address", addressRoutes);
 
 // error handling
 app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.json({ message: err.message || "Internal Server Error" });
+});
+
+// if path is not found 404 status
+app.use((req, res, nex) => {
+  res.status(404).json({
+    message: "Page Not Found",
+  });
 });
 const run = async () => {
   try {
@@ -42,18 +54,5 @@ const run = async () => {
     console.error("Error connecting to the database: ", error);
   }
 };
-
-//Import Routers
-const itemRoutes = require("./routes/items");
-
-//Routes
-app.use("/items", itemRoutes);
-
-// if path is not found 404 status
-app.use((req, res, nex) => {
-  res.status(404).json({
-    message: err.message || "Page Not Found",
-  });
-});
 
 run();
