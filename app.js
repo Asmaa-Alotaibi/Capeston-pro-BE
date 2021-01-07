@@ -42,14 +42,12 @@ const run = async () => {
     console.error("Error connecting to the database: ", error);
   }
 };
- 
+
 //Import Routers
 const itemRoutes = require("./routes/items");
- 
- 
+
 //Routes
 app.use("/items", itemRoutes);
- 
 
 // if path is not found 404 status
 app.use((req, res, nex) => {
@@ -58,6 +56,4 @@ app.use((req, res, nex) => {
   });
 });
 
- 
- 
 run();

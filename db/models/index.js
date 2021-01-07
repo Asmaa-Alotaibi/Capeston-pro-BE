@@ -47,4 +47,14 @@ db.Sequelize = Sequelize;
 db.User.hasMany(db.Address, { as: "addresses", foreignKey: "userId" });
 db.Address.belongsTo(db.User, { as: "user" });
 
+// three relation to item (one-to-many)
+db.User.hasMany(db.Item, { as: "itemOffered", foreignKey: "ownerId" });
+db.Item.belongsTo(db.User, { as: "owner" });
+
+db.User.hasMany(db.Item, { as: "itemRequested", foreignKey: "recipientId" });
+db.Item.belongsTo(db.User, { as: "recipient" });
+
+db.User.hasMany(db.Item, { as: "itemDelivered", foreignKey: "driverId" });
+db.Item.belongsTo(db.User, { as: "driver" });
+
 module.exports = db;

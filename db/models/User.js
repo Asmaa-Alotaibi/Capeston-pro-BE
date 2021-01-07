@@ -27,12 +27,6 @@ module.exports = (sequelize, DataTypes) => {
     phone: {
       type: DataTypes.INTEGER,
     },
-    donater: {
-      type: DataTypes.BOOLEAN,
-    },
-    recipient: {
-      type: DataTypes.BOOLEAN,
-    },
     driver: {
       type: DataTypes.BOOLEAN,
     },
