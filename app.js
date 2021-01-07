@@ -6,7 +6,8 @@ const passport = require("passport");
 const { localStrategy, jwtStrategy } = require("./middleware/passport");
 const userRoutes = require("./routes/users");
 const allusersRoutes = require("./routes/allusers");
-//const addressRoutes = require("./routes/addresses"); // not done yet
+const addressRoutes = require("./routes/addresses");
+const itemRoutes = require("./routes/items");
 const path = require("path");
 
 const app = express();
@@ -24,7 +25,8 @@ app.use(userRoutes);
 // routes
 app.use("/media", express.static(path.join(__dirname, "media")));
 app.use("/allusers", allusersRoutes);
-//app.use("/address", addressRoutes);
+app.use("/items", itemRoutes);
+app.use("/addresses", addressRoutes);
 
 // error handling
 app.use((err, req, res, next) => {
@@ -42,12 +44,6 @@ const run = async () => {
     console.error("Error connecting to the database: ", error);
   }
 };
-
-//Import Routers
-const itemRoutes = require("./routes/items");
-
-//Routes
-app.use("/items", itemRoutes);
 
 // if path is not found 404 status
 app.use((req, res, nex) => {
