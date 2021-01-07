@@ -4,10 +4,17 @@ const bodyParser = require("body-parser");
 const app = express();
 //DataBase
 const db = require("./db/models");
-
+//Import Routers
+const itemRoutes = require("./routes/items");
+//middleware
+const path = require("path");
 //app
 app.use(bodyParser.json());
 app.use(cors());
+//Routes
+app.use("/items", itemRoutes);
+//middleware multer
+app.use("/media", express.static(path.join(__dirname, "media")));
 
 // if path is not found 404 status
 app.use((req, res, nex) => {
