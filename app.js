@@ -8,9 +8,8 @@ const { localStrategy, jwtStrategy } = require("./middleware/passport");
 const itemRoutes = require("./routes/items");
 const userRoutes = require("./routes/users");
 const profilesRoutes = require("./routes/profiles");
-//const addressRoutes = require("./routes/addresses"); // not done yet
+const addressRoutes = require("./routes/addresses");
 const path = require("path");
-
 const app = express();
 
 //middleware
@@ -28,8 +27,8 @@ app.use(userRoutes);
 
 //multer meddileware
 app.use("/media", express.static(path.join(__dirname, "media")));
+app.use("/addresses", addressRoutes);
 
-//app.use("/address", addressRoutes);
 
 // error handling
 app.use((err, req, res, next) => {
@@ -54,5 +53,6 @@ const run = async () => {
     console.error("Error connecting to the database: ", error);
   }
 };
+
 
 run();

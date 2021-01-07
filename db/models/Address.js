@@ -1,5 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
   const Address = sequelize.define("Address", {
+    governorate: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     city: {
       type: DataTypes.STRING,
       allowNull: false,
