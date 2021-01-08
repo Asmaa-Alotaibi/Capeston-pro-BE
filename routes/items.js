@@ -6,6 +6,7 @@ const {
   fetchItems,
   deleteItem,
   updateItem,
+  requesteItem,
 } = require("../controllers/itemController");
 const router = express.Router();
 const upload = require("../middleware/multer");
@@ -46,4 +47,12 @@ router.put(
   upload.single("image"),
   updateItem
 );
+
+//requeste and item
+router.put(
+  "/requeste/:itemId",
+  passport.authenticate("jwt", { session: false }),
+  requesteItem
+);
+
 module.exports = router;

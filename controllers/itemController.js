@@ -1,3 +1,4 @@
+const { object } = require("underscore");
 const { Item } = require("../db/models");
 
 exports.fetchItems = async (itemId, next) => {
@@ -62,6 +63,35 @@ exports.updateItem = async (req, res, next) => {
     } else {
       const err = new Error("Unauthorized");
       err.status = 401;
+      next(err);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Requeste an item
+
+exports.requesteItem = async (req, res, next) => {
+  try {
+    const item = req.item;
+    if (!item.gone) {
+      await item.update({
+        ...item,
+        gone: !item.gone,
+        recipientId: req.user.id,
+      });
+      res.status(204).end();
+    } else if (item.recipientId === req.user.id) {
+      await item.update({
+        ...item,
+        gone: !item.gone,
+        recipientId: null,
+      });
+      res.status(204).end();
+    } else {
+      const err = new Error("Item is not available");
+      err.status = 404;
       next(err);
     }
   } catch (error) {
