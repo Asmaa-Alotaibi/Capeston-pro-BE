@@ -14,11 +14,10 @@ exports.fetchAddress = async (addressId, next) => {
 exports.addressesList = async (req, res, next) => {
   try {
     const adresses = await Address.findAll({
-      attributes: { exclude: ["userId", "createdAt", "updatedAt"] },
       include: {
         model: User,
         as: "user",
-        attributes: ["name"],
+        attributes: ["username"],
       },
     });
     console.log("adresses", adresses);
@@ -44,8 +43,14 @@ exports.addressCreate = async (req, res, next) => {
 
 exports.addressDelete = async (req, res, next) => {
   try {
-    await req.address.destroy();
-    res.status(204).end();
+    if (req.user.id === req.address.userId) {
+      await req.address.destroy();
+      res.status(204).end();
+    } else {
+      const err = new Error("Unauthorized");
+      err.status = 401;
+      next(err);
+    }
   } catch (err) {
     next(err);
   }
@@ -54,8 +59,14 @@ exports.addressDelete = async (req, res, next) => {
 
 exports.addressUpdate = async (req, res, next) => {
   try {
-    await req.address.update(req.body);
-    res.status(204).end();
+    if (req.address.userId === req.user.id) {
+      await req.address.update(req.body);
+      res.status(204).end();
+    } else {
+      const err = new Error("Unauthorized");
+      err.status = 401;
+      next(err);
+    }
   } catch (err) {
     next(err);
   }
