@@ -70,9 +70,9 @@ exports.updateItem = async (req, res, next) => {
   }
 };
 
-// Requeste an item
+// Request an item
 
-exports.requesteItem = async (req, res, next) => {
+exports.requestItem = async (req, res, next) => {
   try {
     const item = req.item;
     if (!item.gone) {

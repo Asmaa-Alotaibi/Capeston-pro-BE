@@ -6,7 +6,7 @@ const {
   fetchItems,
   deleteItem,
   updateItem,
-  requesteItem,
+  requestItem,
 } = require("../controllers/itemController");
 const router = express.Router();
 const upload = require("../middleware/multer");
@@ -48,11 +48,11 @@ router.put(
   updateItem
 );
 
-//requeste and item
+//request and item
 router.put(
-  "/requeste/:itemId",
+  "/request/:itemId",
   passport.authenticate("jwt", { session: false }),
-  requesteItem
+  requestItem
 );
 
 module.exports = router;
