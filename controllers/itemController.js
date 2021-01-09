@@ -1,5 +1,5 @@
 const { object } = require("underscore");
-const { Item } = require("../db/models");
+const { Item, User } = require("../db/models");
 
 exports.fetchItems = async (itemId, next) => {
   try {
@@ -12,7 +12,13 @@ exports.fetchItems = async (itemId, next) => {
 
 exports.itemList = async (req, res, next) => {
   try {
-    const items = await Item.findAll();
+    const items = await Item.findAll({
+      include: {
+        model: User,
+        as: "owner",
+        attributes: ["username"],
+      },
+    });
     res.json(items);
   } catch (error) {
     next(error);
