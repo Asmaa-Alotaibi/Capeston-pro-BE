@@ -27,8 +27,7 @@ app.use(userRoutes);
 
 //multer meddileware
 app.use("/media", express.static(path.join(__dirname, "media")));
-app.use("/addresses", addressRoutes);
-
+app.use("/addresses", addressRoutes); // move this route to the routes section above
 
 // error handling
 app.use((err, req, res, next) => {
@@ -53,6 +52,5 @@ const run = async () => {
     console.error("Error connecting to the database: ", error);
   }
 };
-
 
 run();

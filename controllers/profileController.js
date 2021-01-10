@@ -12,6 +12,7 @@ exports.fetchProfile = async (profileId, next) => {
 
 /*get list of profiles*/
 exports.profilesList = async (req, res, next) => {
+  // do you need a profile list?
   try {
     const profiles = await Profile.findAll({
       include: {

@@ -89,6 +89,7 @@ exports.requestItem = async (req, res, next) => {
       });
       res.status(204).end();
     } else if (item.recipientId === req.user.id) {
+      // clever!
       await item.update({
         ...item,
         gone: !item.gone,

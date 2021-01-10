@@ -13,6 +13,10 @@ exports.fetchAddress = async (addressId, next) => {
 
 exports.addressesList = async (req, res, next) => {
   try {
+    /**
+     * This should return only the addresses of the logged in user
+     * not ALL addresses.
+     */
     const adresses = await Address.findAll({
       include: {
         model: User,
