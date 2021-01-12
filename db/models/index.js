@@ -61,4 +61,9 @@ db.Item.belongsTo(db.User, { as: "driver" });
 db.User.hasOne(db.Profile, { as: "profile", foreignKey: "userId" });
 // one profile belongs to one user
 db.Profile.belongsTo(db.User, { as: "user" });
+
+// one-to-many relation
+db.Address.hasMany(db.Item, { as: "items", foreignKey: "addressId" });
+db.Item.belongsTo(db.Address, { as: "address" });
+
 module.exports = db;
