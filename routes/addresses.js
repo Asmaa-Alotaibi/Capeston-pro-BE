@@ -24,11 +24,9 @@ router.param("addressId", async (req, res, next, addressId) => {
 });
 
 /*get list of addresses not sure of athunticate !*/
-router.get(
-  "/",
-  passport.authenticate("jwt", { session: false }),
-  addressesList
-);
+//,passport.authenticate("jwt", { session: false }),
+
+router.get("/", addressesList);
 
 /* create addrress*/
 router.post(
