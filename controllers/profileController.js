@@ -11,6 +11,7 @@ exports.fetchProfile = async (profileId, next) => {
 };
 
 /*get list of profiles*/
+// to be removed if it not used !
 exports.profilesList = async (req, res, next) => {
   try {
     const profiles = await Profile.findAll({
