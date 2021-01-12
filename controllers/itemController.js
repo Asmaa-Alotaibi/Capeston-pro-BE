@@ -87,7 +87,7 @@ exports.requestItem = async (req, res, next) => {
         booked: !item.booked,
         recipientId: req.user.id,
       });
-      res.status(204).end();
+      res.status(204).end(); // Meshary said clever! << wel done Abduallah :)
     } else if (item.recipientId === req.user.id) {
       await item.update({
         ...item,

@@ -20,15 +20,15 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 passport.use(localStrategy);
 passport.use(jwtStrategy);
+
 //Routes
 app.use("/profiles", profilesRoutes);
 app.use("/items", itemRoutes);
-app.use(userRoutes);
-
-//multer meddileware
-app.use("/media", express.static(path.join(__dirname, "media")));
 app.use("/addresses", addressRoutes);
+app.use(userRoutes);
+//multer meddileware
 
+app.use("/media", express.static(path.join(__dirname, "media")));
 
 // error handling
 app.use((err, req, res, next) => {
@@ -53,6 +53,5 @@ const run = async () => {
     console.error("Error connecting to the database: ", error);
   }
 };
-
 
 run();

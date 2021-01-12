@@ -11,7 +11,6 @@ const {
 
 // adressId from Param
 router.param("addressId", async (req, res, next, addressId) => {
-  console.log(`this is address id: ${addressId}`);
   const address = await fetchAddress(addressId, next);
   if (address) {
     req.address = address;
