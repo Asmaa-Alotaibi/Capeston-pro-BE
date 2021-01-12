@@ -15,6 +15,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    booked: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    needDelivery: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
     category: {
       type: DataTypes.STRING,
       allowNull: false,
