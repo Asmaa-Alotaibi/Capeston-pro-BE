@@ -81,17 +81,17 @@ exports.updateItem = async (req, res, next) => {
 exports.requestItem = async (req, res, next) => {
   try {
     const item = req.item;
-    if (!item.gone) {
+    if (!item.booked) {
       await item.update({
         ...item,
-        gone: !item.gone,
+        booked: !item.booked,
         recipientId: req.user.id,
       });
       res.status(204).end();
     } else if (item.recipientId === req.user.id) {
       await item.update({
         ...item,
-        gone: !item.gone,
+        booked: !item.booked,
         recipientId: null,
       });
       res.status(204).end();
