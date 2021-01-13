@@ -7,6 +7,9 @@ const {
   deleteItem,
   updateItem,
   requestItem,
+  deliverItem,
+  goneItem,
+  needDelivery,
 } = require("../controllers/itemController");
 const router = express.Router();
 const upload = require("../middleware/multer");
@@ -53,6 +56,23 @@ router.put(
   "/request/:itemId",
   passport.authenticate("jwt", { session: false }),
   requestItem
+);
+// driver route
+router.put(
+  "/delivery/:itemId",
+  passport.authenticate("jwt", { session: false }),
+  deliverItem
+);
+router.put(
+  "/needDelivery/:itemId",
+  passport.authenticate("jwt", { session: false }),
+  needDelivery
+);
+// gone Item
+router.put(
+  "/gone/:itemId",
+  passport.authenticate("jwt", { session: false }),
+  goneItem
 );
 
 module.exports = router;
