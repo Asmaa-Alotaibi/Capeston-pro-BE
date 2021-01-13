@@ -93,6 +93,7 @@ exports.requestItem = async (req, res, next) => {
         ...item,
         booked: !item.booked,
         recipientId: null,
+        needDelivery: null,
       });
       res.status(204).end();
     } else {
@@ -100,6 +101,58 @@ exports.requestItem = async (req, res, next) => {
       err.status = 404;
       next(err);
     }
+  } catch (error) {
+    next(error);
+  }
+};
+
+// the driver can choose to book and item to deliver it !!
+
+exports.deliverItem = async (req, res, next) => {
+  try {
+    const item = req.item;
+    // the item must be booked and has item.needDelivery to be true
+    if (!item.driverId) {
+      await item.update({ ...item, driverId: req.user.id });
+      res.status(201).end();
+    } else if (item.driverId === req.user.id) {
+      await item.update({ ...item, driverId: null });
+      res.status(201).end();
+    } else {
+      const err = new Error(
+        "This item has already been schaduale to be delivered, Thanks"
+      );
+      err.status = 404;
+      next(err);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+// need Delivery
+exports.needDelivery = async (req, res, next) => {
+  try {
+    const item = req.item;
+    if (!item.needDelivery) {
+      await item.update({ ...item, needDelivery: !item.needDelivery });
+      res.status(201).end();
+    } else {
+      await item.update({ ...item, needDelivery: !item.needDelivery });
+      res.status(201).end();
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+// mark an item to be gone!
+
+exports.goneItem = async (req, res, next) => {
+  try {
+    const item = req.item;
+    await item.update({ ...item, gone: !item.gone });
+    res.status(201).end();
   } catch (error) {
     next(error);
   }
