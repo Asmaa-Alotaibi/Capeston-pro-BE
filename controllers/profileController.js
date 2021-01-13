@@ -1,4 +1,4 @@
-const { Profile, User } = require("../db/models");
+const { Profile, User, Address } = require("../db/models");
 
 // *fetch profile to update*/
 exports.fetchProfile = async (profileId, next) => {
@@ -19,6 +19,10 @@ exports.profilesList = async (req, res, next) => {
         model: User,
         as: "user",
         attributes: ["username"],
+        include: {
+          model: Address,
+          as: "addresses",
+        },
       },
     });
     // console.log("Profiles", profiles);
