@@ -22,8 +22,7 @@ router.param("addressId", async (req, res, next, addressId) => {
   }
 });
 
-/*get list of addresses not sure of athunticate !*/
-//,passport.authenticate("jwt", { session: false }),
+/*get list of addresses do find the address for an item !*/
 
 router.get("/", addressesList);
 
