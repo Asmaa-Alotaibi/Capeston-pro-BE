@@ -16,7 +16,7 @@ exports.itemList = async (req, res, next) => {
       include: {
         model: User,
         as: "owner",
-        attributes: ["username"],
+        attributes: ["username", "phone"],
       },
     });
     res.json(items);

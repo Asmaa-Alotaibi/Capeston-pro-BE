@@ -15,13 +15,13 @@ exports.fetchProfile = async (profileId, next) => {
 exports.profilesList = async (req, res, next) => {
   try {
     const profiles = await Profile.findAll({
-      include: [
-        {
-          model: User,
-          as: "user",
-          attributes: ["username"],
-        },
-        {
+
+      include: {
+        model: User,
+        as: "user",
+        attributes: ["username", "phone"],
+        include: {
+
           model: Address,
           as: "addresses",
         },
