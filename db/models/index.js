@@ -44,8 +44,8 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 // one-to-many relation
-db.User.hasMany(db.Address, { as: "addresses", foreignKey: "userId" });
-db.Address.belongsTo(db.User, { as: "user" });
+db.Profile.hasMany(db.Address, { as: "addresses", foreignKey: "profileId" });
+db.Address.belongsTo(db.User, { as: "profile" });
 
 // three relation to item (one-to-many)
 db.User.hasMany(db.Item, { as: "itemOffered", foreignKey: "ownerId" });

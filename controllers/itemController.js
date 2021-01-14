@@ -112,12 +112,16 @@ exports.deliverItem = async (req, res, next) => {
   try {
     const item = req.item;
     // the item must be booked and has item.needDelivery to be true
-    if (!item.driverId) {
+    if (!item.driverId && item.needDelivery) {
       await item.update({ ...item, driverId: req.user.id });
       res.status(201).end();
     } else if (item.driverId === req.user.id) {
       await item.update({ ...item, driverId: null });
       res.status(201).end();
+    } else if (!item.needDelivery) {
+      const err = new Error("This item is not assiagned to be delivered");
+      err.status = 404;
+      next(err);
     } else {
       const err = new Error(
         "This item has already been schaduale to be delivered, Thanks"
