@@ -9,7 +9,7 @@ const itemRoutes = require("./routes/items");
 const userRoutes = require("./routes/users");
 const profilesRoutes = require("./routes/profiles");
 const addressRoutes = require("./routes/addresses");
-const usersRoutes = require("./routes/allusers");
+
 const path = require("path");
 const app = express();
 
@@ -27,7 +27,7 @@ app.use("/profiles", profilesRoutes);
 app.use("/items", itemRoutes);
 app.use("/addresses", addressRoutes);
 app.use(userRoutes);
-app.use("/users", usersRoutes);
+
 //multer meddileware
 
 app.use("/media", express.static(path.join(__dirname, "media")));

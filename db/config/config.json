@@ -1,6 +1,6 @@
 {
   "development": {
-    "username": "abdullahalsharrah",
+    "username": "postgres",
     "password": "postgres",
     "database": "capstone_db",
     "host": "127.0.0.1",
