@@ -13,6 +13,7 @@ exports.signup = async (req, res, next) => {
     const newProfile = await Profile.create({ userId: newUser.id });
     const payload = {
       id: newUser.id,
+      driver: newUser.driver,
       username: newUser.username,
       firstName: newProfile.firstName,
       lastName: newProfile.lastName,
@@ -33,6 +34,8 @@ exports.signin = (req, res) => {
   const payload = {
     id: user.id,
     username: user.username,
+    driver: user.driver,
+    email: user.email,
     exp: Date.now() + parseInt(JWT_EXPIRATION_MS),
   };
   const token = jwt.sign(JSON.stringify(payload), JWT_SECRET);
