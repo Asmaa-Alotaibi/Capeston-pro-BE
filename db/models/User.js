@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     driver: {
       type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
   });
   return User;
