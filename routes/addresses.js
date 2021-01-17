@@ -26,6 +26,7 @@ router.param("addressId", async (req, res, next, addressId) => {
 //,passport.authenticate("jwt", { session: false }),
 
 router.get("/", addressesList);
+passport.authenticate("jwt", { session: false });
 
 /* create addrress*/
 router.post(
