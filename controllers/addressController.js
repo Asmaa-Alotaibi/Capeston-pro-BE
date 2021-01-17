@@ -1,4 +1,4 @@
-const { Address, User } = require("../db/models");
+const { Address, Profile } = require("../db/models");
 
 exports.fetchAddress = async (addressId, next) => {
   try {
@@ -15,9 +15,9 @@ exports.addressesList = async (req, res, next) => {
   try {
     const adresses = await Address.findAll({
       include: {
-        model: User,
-        as: "user",
-        attributes: ["username"],
+        model: Profile,
+        as: "profile",
+        attributes: ["firstName", "lastName"],
       },
     });
     console.log("adresses", adresses);
