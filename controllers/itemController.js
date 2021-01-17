@@ -80,13 +80,15 @@ exports.updateItem = async (req, res, next) => {
 
 exports.requestItem = async (req, res, next) => {
   try {
+    const randomValue =
+      Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2); //random string
     const item = req.item;
     if (!item.booked) {
       await item.update({
         ...item,
         booked: !item.booked,
         recipientId: req.user.id,
-        QRvalue: req.item.QRvalue, //for testing didnt work!
+        QRvalue: randomValue, //for testing didnt work!
       });
       res.status(204).end(); // Meshary said clever! << well done Abduallah :)
     } else if (item.recipientId === req.user.id) {
@@ -95,6 +97,7 @@ exports.requestItem = async (req, res, next) => {
         booked: !item.booked,
         recipientId: null,
         needDelivery: null,
+        QRvalue: null, //for testing didnt work!
       });
       res.status(204).end();
     } else {
