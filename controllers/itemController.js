@@ -86,8 +86,9 @@ exports.requestItem = async (req, res, next) => {
         ...item,
         booked: !item.booked,
         recipientId: req.user.id,
+        QRvalue: req.item.QRvalue, //for testing didnt work!
       });
-      res.status(204).end(); // Meshary said clever! << wel done Abduallah :)
+      res.status(204).end(); // Meshary said clever! << well done Abduallah :)
     } else if (item.recipientId === req.user.id) {
       await item.update({
         ...item,
@@ -124,7 +125,7 @@ exports.deliverItem = async (req, res, next) => {
       next(err);
     } else {
       const err = new Error(
-        "This item has already been schaduale to be delivered, Thanks"
+        "This item has already been scheduled to be delivered, Thanks"
       );
       err.status = 404;
       next(err);
