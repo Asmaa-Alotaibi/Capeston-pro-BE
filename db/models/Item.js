@@ -27,9 +27,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    QRvalue: {
-      type: DataTypes.STRING,
-    },
   });
   return Item;
 };
