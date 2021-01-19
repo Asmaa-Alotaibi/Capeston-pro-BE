@@ -31,7 +31,7 @@ exports.addressesList = async (req, res, next) => {
 
 exports.addressCreate = async (req, res, next) => {
   try {
-    req.body.userId = req.user.id;
+    req.body.profileId = req.user.id;
     const newAddress = await Address.create(req.body);
     res.status(201).json(newAddress);
   } catch (err) {
@@ -43,7 +43,8 @@ exports.addressCreate = async (req, res, next) => {
 
 exports.addressDelete = async (req, res, next) => {
   try {
-    if (req.user.id === req.address.userId) {
+    if (req.address.profileId === req.user.id) {
+      // .profileId not userId
       await req.address.destroy();
       res.status(204).end();
     } else {
@@ -59,7 +60,8 @@ exports.addressDelete = async (req, res, next) => {
 
 exports.addressUpdate = async (req, res, next) => {
   try {
-    if (req.address.userId === req.user.id) {
+    if (req.address.profileId === req.user.id) {
+      console.log("from update>>Here", req.address);
       await req.address.update(req.body);
       res.status(204).end();
     } else {
