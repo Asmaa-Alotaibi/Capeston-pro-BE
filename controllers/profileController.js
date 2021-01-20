@@ -21,7 +21,6 @@ exports.profilesList = async (req, res, next) => {
         attributes: ["username"],
       },
     });
-    // console.log("Profiles", profiles);
     res.json(profiles);
   } catch (err) {
     next(err);
