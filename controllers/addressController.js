@@ -20,7 +20,6 @@ exports.addressesList = async (req, res, next) => {
         attributes: ["firstName", "lastName"],
       },
     });
-    console.log("adresses", adresses);
     res.json(adresses);
   } catch (err) {
     next(err);
