@@ -18,9 +18,10 @@ exports.profilesList = async (req, res, next) => {
       include: {
         model: User,
         as: "user",
-        attributes: ["username"],
+        attributes: ["username", "phone", "email"],
       },
     });
+    // console.log("Profiles", profiles);
     res.json(profiles);
   } catch (err) {
     next(err);
